@@ -14,24 +14,21 @@ class Walker {
   // Randomly move up, down, left, right, or stay in one place
   void step() {
     float r = random(1);
-    if (r > 0.9) {
-      PVector v1 = new PVector(x, y);
-      PVector v2 = new PVector(mouseX, mouseY);
-      float angle = PVector.angleBetween(v1, v2);
-      if (PI / 2 > angle && angle > 3 * PI / 2) { //<>//
+    if (r > 0.5) {
+      PVector v = new PVector(mouseX - x, mouseY - y);
+      float angle = degrees(v.heading());
+      if (90 > angle && angle > -90) {
         x += 1;
-      } else x =+ 1;
-      if (0 < angle && angle < PI) {
-        y += 1;
-      } else {
+      } else x -= 1;
+      if (-180 < angle && angle < 0) {
         y -= 1;
+      } else {
+        y += 1;
       }
     } else {
       x += int(random(3)) - 1;
       y += int(random(3)) - 1;
     }
-    //x = mouseX;
-    //y = mouseY;
 
     x = constrain(x,0,width-1);
     y = constrain(y,0,height-1);
@@ -46,6 +43,7 @@ void setup() {
   // Create a walker object
   w = new Walker();
   background(255);
+  frameRate(500);
 }
 
 void draw() {
